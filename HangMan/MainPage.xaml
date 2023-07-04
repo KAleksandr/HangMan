@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="HangMan.MainPage">
+
+    <Grid RowDefinitions=".6*,.4*">
+        <VerticalStackLayout>
+            <Label FontAttributes="Bold"
+               HorizontalOptions="Center"
+               Text="Errors: 0 of 6"/>
+            <Image Source="img0.jpg" WidthRequest="200" HeightRequest="200"/>
+            <Label FontSize="40" 
+               HorizontalOptions="Center" 
+               VerticalOptions="Center"
+               Text="{Binding Spotlight}"/>
+            <Label FontSize="Large"
+                   HorizontalTextAlignment="Center"
+                   Text="You Lost!"/>
+            <Button HorizontalOptions="Center"
+                    Text="Reset"
+                    WidthRequest="100"/>
+        </VerticalStackLayout>
+        <FlexLayout Grid.Row="1" Wrap="Wrap"
+                    JustifyContent="SpaceEvenly"
+                    BindableLayout.ItemsSource="{Binding Letters}">
+            <BindableLayout.ItemTemplate>
+                <DataTemplate>
+                    <Button HeightRequest="50"
+                            WidthRequest="50"
+                            Text="{Binding .}"/>
+                </DataTemplate>
+            </BindableLayout.ItemTemplate>
+            
+        </FlexLayout>
+    </Grid>
+
+</ContentPage>
