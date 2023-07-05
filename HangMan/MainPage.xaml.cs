@@ -30,6 +30,22 @@ public partial class MainPage : ContentPage, INotifyPropertyChanged
             OnPropertyChanged();
         }
     }
+    public string GameStatus
+    {
+        get => gameStatus; set
+        {
+            gameStatus = value;
+            OnPropertyChanged();
+        }
+    }
+    public string CurrentImage
+    {
+        get => currentImage; set
+        {
+            currentImage = value;
+            OnPropertyChanged();
+        }
+    }
     #endregion
     #region Fields
     List<string> words = new List<string>() {
@@ -53,6 +69,10 @@ public partial class MainPage : ContentPage, INotifyPropertyChanged
    
     private List<char> letters = new List<char>();
     private string message;
+    int mistakes = 0;
+    int maxWrong = 6;
+    private string gameStatus;
+    private string currentImage = "img0.jpg";
     #endregion
 
     public MainPage()
@@ -75,6 +95,10 @@ public partial class MainPage : ContentPage, INotifyPropertyChanged
         var temp = answer.Select(x => (guessed.IndexOf(x) >= 0 ? x : '_')).ToArray();
         Spotlight = string.Join(' ', temp);
     }
+    private void UpdateStatus()
+    {
+        GameStatus = $"Errors: {mistakes} of {maxWrong}";
+    }
     #endregion
 
     private void Button_Clicked(object sender, EventArgs e)
@@ -96,7 +120,21 @@ public partial class MainPage : ContentPage, INotifyPropertyChanged
         if(answer.IndexOf(letter) >= 0) {
             CalculateWord(answer,guessed);
         }
+        else if (answer.IndexOf(letter) == -1)
+        {
+            mistakes++;
+            UpdateStatus();
+            CheckIfGameLost();
+            CurrentImage = $"img{mistakes}.jpg";
+        }
         CheckIfGameWon();
+    }
+
+    private void CheckIfGameLost()
+    {
+        if (mistakes == maxWrong) {
+            Message = "You Lost!";
+        }
     }
 
     private void CheckIfGameWon()
@@ -105,6 +143,7 @@ public partial class MainPage : ContentPage, INotifyPropertyChanged
         {
             Message = "You win!";
         }
+        
     }
 }
 

@@ -4,11 +4,11 @@
              x:Class="HangMan.MainPage">
 
     <Grid RowDefinitions=".6*,.4*">
-        <VerticalStackLayout>
+        <VerticalStackLayout Spacing="10">
             <Label FontAttributes="Bold"
                HorizontalOptions="Center"
-               Text="Errors: 0 of 6"/>
-            <Image Source="img0.jpg" WidthRequest="200" HeightRequest="200"/>
+               Text="{Binding GameStatus}"/>
+            <Image Source="{Binding CurrentImage}" WidthRequest="200" HeightRequest="200"/>
             <Label FontSize="40" 
                HorizontalOptions="Center" 
                VerticalOptions="Center"
