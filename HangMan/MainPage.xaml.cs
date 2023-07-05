@@ -126,6 +126,7 @@ public partial class MainPage : ContentPage, INotifyPropertyChanged
             UpdateStatus();
             CheckIfGameLost();
             CurrentImage = $"img{mistakes}.jpg";
+
         }
         CheckIfGameWon();
     }
@@ -134,6 +135,19 @@ public partial class MainPage : ContentPage, INotifyPropertyChanged
     {
         if (mistakes == maxWrong) {
             Message = "You Lost!";
+            DisableLetters();
+        }
+    }
+
+    private void DisableLetters()
+    {
+        foreach(var children in LettersConteiner.Children)
+        {
+            var btn = children as Button;
+            if(btn != null)
+            {
+                btn.IsEnabled = false;
+            }
         }
     }
 
@@ -142,8 +156,29 @@ public partial class MainPage : ContentPage, INotifyPropertyChanged
         if(Spotlight.Replace(" ", "") == answer)
         {
             Message = "You win!";
+            DisableLetters();
         }
         
+    }
+
+    private void Button_Clicked_Reset(object sender, EventArgs e)
+    {
+        foreach (var children in LettersConteiner.Children)
+        {
+            mistakes = 0;
+            guessed = new List<char>();
+            CurrentImage = "img0.jpg";
+            PickWord();
+            CalculateWord(answer, guessed);
+            Message = string.Empty;
+            UpdateStatus();
+            var btn = children as Button;
+            if (btn != null)
+            {
+                btn.IsEnabled = true;
+                
+            }
+        }
     }
 }
 
